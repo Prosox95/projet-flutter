@@ -1,30 +1,32 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:projet_flutter/main.dart';
+// Attention à bien mettre le nom de ton projet ici, normalement c'est projet_flutter
+import 'package:projet_flutter/models/product.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  // On regroupe les tests liés au modèle Product
+  group('Tests sur le modèle Product', () {
+    // Test 1 : Vérifier la conversion du JSON vers l'objet Dart
+    test(
+      'fromJson doit créer un objet Product valide à partir de données JSON',
+      () {
+        // 1. Préparation de fausses données (ce que l'API Platzi pourrait renvoyer)
+        final Map<String, dynamic> json = {
+          'id': 1,
+          'title': 'T-shirt de test',
+          'description': 'Un beau t-shirt',
+          'price': 15.5,
+          'images': ['https://url-de-l-image.com/image.jpg'],
+        };
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+        // 2. Exécution de la fonction à tester
+        final product = Product.fromJson(json);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+        // 3. Vérifications (expect) : On s'attend à ce que product.title soit égal à 'T-shirt de test'
+        expect(product.id, 1);
+        expect(product.title, 'T-shirt de test');
+        expect(product.price, 15.5);
+        expect(product.imageUrl, 'https://url-de-l-image.com/image.jpg');
+      },
+    );
   });
 }

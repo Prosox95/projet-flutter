@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/product_list_screen.dart';
+import 'package:projet_flutter/screens/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Catalogue de Produits',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const ProductListScreen(),
+      home: const MainScreen(),
     );
   }
 }
