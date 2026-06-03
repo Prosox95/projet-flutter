@@ -3,6 +3,7 @@ import '../models/product.dart';
 import '../services/product_api.dart';
 import 'product_detail_screen.dart';
 import '../widgets/favorite_button.dart';
+import '../services/cart_service.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -70,7 +71,33 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     ),
                   );
                 },
-                trailing: FavoriteButton(productId: product.id),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize
+                      .min, // Crucial pour ne pas faire exploser le design
+                  children: [
+                    FavoriteButton(productId: product.id),
+                    IconButton(
+                      icon: const Icon(Icons.add_shopping_cart),
+                      onPressed: () async {
+                        // 1. On ajoute au panier en base locale
+                        await CartService().addToCart(product.id);
+
+                        // 2. On affiche un petit message temporaire en bas de l'écran (SnackBar)
+                        // Le if (context.mounted) est une sécurité en Flutter asynchrone
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                '${product.title} ajouté au panier',
+                              ),
+                              duration: const Duration(seconds: 2),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
               );
             },
           );
