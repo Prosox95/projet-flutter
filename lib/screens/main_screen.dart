@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'product_list_screen.dart';
 import 'favorites_screen.dart';
 import 'cart_screen.dart';
+import 'history_screen.dart';
 
 // StatefulWidget car on doit mémoriser et modifier l'onglet actif
 class MainScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
     const ProductListScreen(), // Index 0
     const FavoritesScreen(), // Index 1
     const CartScreen(), // Index 2
+    const HistoryScreen(), // Index 3
   ];
 
   // 3. Cette fonction s'exécute quand tu cliques sur un bouton en bas
@@ -41,21 +43,33 @@ class _MainScreenState extends State<MainScreen> {
 
       // La fameuse barre de navigation
       bottomNavigationBar: BottomNavigationBar(
-        // On lui indique quel est l'index actuellement sélectionné pour qu'il le mette en surbrillance
         currentIndex: _selectedIndex,
-        // Que faire quand on clique ? Appeler notre fonction _onItemTapped
         onTap: _onItemTapped,
-
-        // La liste des boutons (au moins 2 sont obligatoires)
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white, // Fond blanc pur
+        elevation: 8, // Une ombre légère pour détacher la barre
+        selectedItemColor: Colors.black, // L'élément actif est noir profond
+        unselectedItemColor: Colors.blue[400], // L'inactif est un gris discret
+        showUnselectedLabels:
+            true, // Affiche les labels pour garder une symétrie
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag), // L'icône
-            label: 'Produits', // Le texte en dessous
+            icon: Icon(Icons.shopping_bag_outlined),
+            label: 'Produits',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoris'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.favorite_border),
+            label: 'Favoris',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
             label: 'Panier',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'Historique',
           ),
         ],
       ),

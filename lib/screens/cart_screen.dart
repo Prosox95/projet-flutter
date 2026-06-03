@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../services/cart_service.dart';
 import '../services/product_api.dart';
 import '../models/product.dart';
@@ -72,18 +73,39 @@ class _CartScreenState extends State<CartScreen> {
     _loadCart(); // On rappelle _loadCart pour recalculer le total et l'affichage
   }
 
-  // Fonction de simulation de commande
   Future<void> _validateOrder() async {
-    await _cartService.clearCart(); // On vide le panier en mémoire
-    _loadCart(); // On vide l'affichage
+    final user = Supabase.instance.client.auth.currentUser;
+    if (user == null) return;
+
+    // 1. Insertion dans 'orders'
+    final orderResponse = await Supabase.instance.client
+        .from('orders')
+        .insert({'user_id': user.id, 'total_price': _totalPrice})
+        .select()
+        .single();
+
+    final orderId = orderResponse['id'];
+
+    // 2. Insertion des produits dans 'order_items'
+    for (var product in _cartItems) {
+      await Supabase.instance.client.from('order_items').insert({
+        'order_id': orderId,
+        'product_title': product.title,
+        'price': product.price,
+      });
+    }
+
+    // 3. Nettoyage
+    await _cartService.clearCart();
 
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Commande validée avec succès ! 🎉'),
-          backgroundColor: Colors.green,
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Commande validée !')));
+      setState(() {
+        _cartItems = [];
+        _totalPrice = 0.0;
+      });
     }
   }
 
