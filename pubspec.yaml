@@ -37,6 +37,8 @@ dependencies:
   # Ajout de la dépendance http
   http: ^1.1.0
   shared_preferences: ^2.5.5
+  supabase_flutter: ^2.12.4
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

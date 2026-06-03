@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/product.dart';
 import '../widgets/favorite_button.dart';
 import '../services/cart_service.dart';
@@ -25,19 +26,15 @@ class ProductDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Affichage de l'image
-            Center(
-              child: product.imageUrl.isNotEmpty
-                  ? Image.network(
-                      product.imageUrl,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    )
-                  : const Icon(
-                      Icons.image_not_supported,
-                      size: 100,
-                      color: Colors.grey,
-                    ),
+            // Affichage d'une icône générique à la place de l'image
+            const Center(
+              child: Icon(
+                Icons.shopping_bag,
+                size: 150,
+                color: Colors.blueAccent,
+              ),
             ),
+            const SizedBox(height: 24),
             const SizedBox(height: 24),
 
             // Titre

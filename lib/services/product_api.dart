@@ -1,28 +1,23 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/product.dart';
 
 class ProductApi {
-  static const String _baseUrl = 'https://api.escuelajs.co/api/v1';
+  // On récupère l'instance de Supabase initialisée dans main.dart
+  final SupabaseClient _supabase = Supabase.instance.client;
 
   Future<List<Product>> fetchProducts() async {
     try {
-      final response = await http.get(Uri.parse('$_baseUrl/products'));
+      // On requête la table 'products'
+      final response = await _supabase.from('products').select();
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-        return data
-            .map((item) => Product.fromJson(item as Map<String, dynamic>))
-            .toList();
-      } else {
-        // Pour debug, garde ça au début
-        print('Erreur HTTP ${response.statusCode}: ${response.body}');
-        throw Exception('Erreur HTTP ${response.statusCode}');
-      }
-    } catch (e, stack) {
-      print('Erreur dans fetchProducts: $e');
-      print(stack);
-      throw Exception('Erreur lors du chargement des produits');
+      // Supabase renvoie une liste de Map (JSON)
+      final List<dynamic> data = response as List<dynamic>;
+
+      // On convertit cette liste en objets Product
+      return data.map((json) => Product.fromJson(json)).toList();
+    } catch (e) {
+      print("Erreur lors de la récupération des produits : $e");
+      return [];
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/product.dart';
 import '../services/product_api.dart';
 import 'product_detail_screen.dart';
@@ -53,14 +54,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
               final product = products[index];
 
               return ListTile(
-                leading: product.imageUrl.isNotEmpty
-                    ? Image.network(
-                        product.imageUrl,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      )
-                    : const Icon(Icons.image_not_supported),
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.blueAccent,
+                  child: Icon(Icons.shopping_bag, color: Colors.white),
+                ),
                 title: Text(product.title),
                 subtitle: Text('${product.price.toStringAsFixed(2)} €'),
                 onTap: () {
