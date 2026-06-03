@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteService {
@@ -11,6 +12,8 @@ class FavoriteService {
     // Les SharedPreferences stockent des listes de String.
     // On récupère la liste, ou une liste vide si rien n'est sauvegardé.
     final List<String> stringIds = prefs.getStringList(_favoritesKey) ?? [];
+
+    debugPrint("=== DEBUG: IDs récupérés depuis la mémoire : $stringIds ===");
 
     // On convertit les String en int car nos IDs de produits sont des entiers
     return stringIds.map((id) => int.parse(id)).toList();
@@ -26,8 +29,10 @@ class FavoriteService {
     // Logique de bascule (toggle)
     if (currentFavorites.contains(productId)) {
       currentFavorites.remove(productId);
+      debugPrint("=== DEBUG: Retrait de l'ID $productId ===");
     } else {
       currentFavorites.add(productId);
+      debugPrint("=== DEBUG: Ajout de l'ID $productId ===");
     }
 
     // On reconvertit en String pour la sauvegarde
@@ -35,6 +40,8 @@ class FavoriteService {
         .map((id) => id.toString())
         .toList();
     await prefs.setStringList(_favoritesKey, stringsToSave);
+
+    debugPrint("=== DEBUG: Nouvelle liste sauvegardée : $stringsToSave ===");
   }
 
   // Vérifie si un produit spécifique est en favori

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../services/product_api.dart';
 import 'product_detail_screen.dart';
+import '../widgets/favorite_button.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -69,6 +70,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     ),
                   );
                 },
+                trailing: FavoriteButton(productId: product.id),
               );
             },
           );
