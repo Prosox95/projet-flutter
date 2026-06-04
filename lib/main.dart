@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projet_flutter/supabase_keys.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:projet_flutter/screens/login_screen.dart';
 
@@ -8,9 +9,8 @@ Future<void> main() async {
 
   // Connexion à ta base de données Supabase
   await Supabase.initialize(
-    url: 'https://xhqmziiraznvaxnkarad.supabase.co', // Colle ton URL ici
-    anonKey:
-        'sb_publishable_446xsF5trf91hSA8s-MP3Q_yLIMaWm_', // Colle ta clé ici
+    url: SupabaseKeys.url,
+    anonKey: SupabaseKeys.anonKey,
   );
   runApp(const MyApp());
 }

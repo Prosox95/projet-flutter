@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../models/product.dart';
 import '../services/product_api.dart';
 import 'product_detail_screen.dart';
