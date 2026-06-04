@@ -1,4 +1,4 @@
-# Nom de ton application
+# Projet BTS Flutter
 
 Application de e-commerce développée avec **Flutter** et **Supabase**. Ce projet propose une expérience d'achat fluide, sécurisée et épurée.
 
@@ -32,10 +32,10 @@ La base de données repose sur une structure relationnelle permettant de lier le
 ## 🛠️ Installation
 
 1. Cloner le dépôt.
-2. Configurer les clés Supabase dans `main.dart`.
+2. Configurer les clés Supabase dans `supabase_keys.dart`.
 3. Lancer `flutter pub get`.
 4. Lancer l'application avec `flutter run`.
 
 ## 📸 Aperçu
 
-![Aperçu application](assets/images/flutter-bts-app)
+![Aperçu application](assets/images/flutter-bts-app.png)
